@@ -43,3 +43,10 @@ div.overx{
     overflow-y: scroll;
     height:600px;
 }
+
+.white{
+    background-color:#fff;
+}
+.bordernone{
+    border:none;
+}
