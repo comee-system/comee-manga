@@ -15,6 +15,7 @@ $(function(){
      * hiddenに保存されているファイルを表示
      */
     $(this).displayImage();
+
 });
 $.fn.displayImage = function(){
     var _filepath = $("#filepath").val();

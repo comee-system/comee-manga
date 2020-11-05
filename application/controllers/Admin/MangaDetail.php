@@ -11,6 +11,7 @@ class MangaDetail extends MY_Controller {
 		$this->load->model("Tag");
 		$this->load->model("manga_model");
 		$this->load->model("Expression");
+		$this->load->model("Manga_detail");
 		$this->load->library('pagination');
 
 		//年齢制限
@@ -102,6 +103,8 @@ class MangaDetail extends MY_Controller {
 			exit();
 		}
 
+		//詳細画像
+		$mangaImage = $this->Manga_detail->___getMangaDetail($id);
 
 		$data = [];
 		$data['tagJS'] = "on";
@@ -124,6 +127,7 @@ class MangaDetail extends MY_Controller {
 		//連載データ
 		$manga = $this->manga_model->___getMangaDataAll();
 		$data['manga'] = $manga;
+		$data['mangaImage'] = $mangaImage;
 
 		//表現内容
 		$expresstiondata = $this->Expression->__getMasterExpresstionData();
@@ -137,6 +141,7 @@ class MangaDetail extends MY_Controller {
 			$data[ 'user_id'    ] = "";
 			$data[ 'filepath'   ] = "";
 		}
+		
 
 		$data[ 'id'         ] = $id;
 		

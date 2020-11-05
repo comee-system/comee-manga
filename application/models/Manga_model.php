@@ -150,6 +150,9 @@ class Manga_model extends CI_Model {
         $data[ 'caption' ] = $this->input->post('caption');
         $data[ 'detail_age_limit' ] = $this->input->post('detail_age_limit');
         $data[ 'sale_flag' ] = $this->input->post('sale_flag');
+        $data[ 'date_status' ] = $this->input->post('date_status');
+        $data[ 'start_date' ] = $this->input->post('start_date');
+        $data[ 'end_date' ] = $this->input->post('end_date');
         $data[ 'outline_text' ] = $this->input->post('outline_text');
         $data[ 'thumnail_filename' ] = basename($this->input->post('filepath'));
         $data[ 'regist_ts' ] = date("Y-m-d H:i:s");
@@ -165,6 +168,16 @@ class Manga_model extends CI_Model {
           $mangadetail_id = $this->db->insert_id();
         }
         $this->lastid = $mangadetail_id;
+        
+        //漫画用画像登録
+        $mangaDetail = $this->input->post("mangaDetail");
+        foreach($mangaDetail as $key=>$values){
+          $this->__createImage("detail","lists",$values);
+        }
+        //漫画詳細画像データ登録
+        $this->Manga_detail->__setImageData($this->lastid);
+
+
         //タグデータ登録
         $flag1 = $this->Tag->__setTagData($mangadetail_id,"detail");
         //表現内容データ登録
@@ -291,8 +304,9 @@ class Manga_model extends CI_Model {
      * 画像の補正
      * $type : 詳細
      * $code : サムネイル
+     * $detailpath : ファイル名を指定
      */
-    public function __createImage($type = "",$code = ""){
+    public function __createImage($type = "",$code = "",$detailpath=""){
 
       //ユーザー用のディレクトリ作成
       $userPath = D_IMAGE.$this->input->post('user_id')."/";
@@ -314,9 +328,10 @@ class Manga_model extends CI_Model {
 
       //画像リサイズ
       $filepath = base_url().$this->input->post("filepath");
+      if($detailpath) $filepath = base_url().$detailpath;
+      
       //ファイルがあるときのみ実行
-
-      if(!empty($this->input->post("filepath"))){
+      if(!empty($filepath)){
         //ファイル情報
         $path_parts = pathinfo($filepath);
         $extension = $path_parts[ 'extension' ];
@@ -357,6 +372,7 @@ class Manga_model extends CI_Model {
     public function __getMangaDetailOne($id){
 
       $where[ 'id' ] = $id;
+      $where[ 'status' ] = 1;
       $query = $this->db->get_where("view_manga_detail_tag_expression",$where);
       $result = $query->result();
       return $result;

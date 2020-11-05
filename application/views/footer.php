@@ -37,10 +37,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
 
 
-
+<script src="/assets/js/Sortable.js"></script>
 <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 <script src="/assets/js/base.js"></script>
 <script src="/assets/js/fileUpload.js"></script>
+<script src="/assets/js/fileUploadAll.js"></script>
 <script src="/assets/js/calendar.js"></script>
 <?php if(isset($tagJS) && $tagJS):?>
 <script src="/assets/js/tag.js"></script>

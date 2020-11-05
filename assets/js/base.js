@@ -1,5 +1,19 @@
 $(function(){
     /*******************
+    * 漫画詳細並び替え
+    */
+   try{
+        Sortable.create(listWithHandle, {
+            animation: 150,
+        });
+
+
+    }catch(e){}
+
+
+
+
+    /*******************
      * ログアウトリンク
      */
     $("#logout").click(function(){
